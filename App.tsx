@@ -5,17 +5,6 @@ import { Header, Footer, Main } from './Components';
 
 function App() {
   return (
-    /*      <div>
-          <Oseba ime = "Janez" opis="nek opis">
-              <div>
-                  <em>Profile img</em>
-                  <strong>hqnciqncnq</strong>
-              </div>
-          </Oseba>
-          <Oseba ime = "Matija" opis="nek opis"></Oseba>
-          <Ekipa></Ekipa>
-      </div>*/
-
     <>
       <Header teamName="Chelsea FC" />
       <Main
