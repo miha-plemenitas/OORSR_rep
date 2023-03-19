@@ -7,11 +7,7 @@ function App() {
   return (
     <>
       <Header teamName="Chelsea FC" />
-      <Main
-        letoUstanovitve="1905"
-        direktor="Todd Boehly"
-        trener="Graham Potter"
-      />
+      <Main />
       <Footer />
     </>
   );

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
@@ -11,15 +10,46 @@ import {
   RouterProvider,
   useParams,
 } from 'react-router-dom';
+import { ekipe, EkipaProps } from './Components/SeznamEkip';
+import { Igralec } from './Components/Igralec';
+import { Opozorilo } from './Components/Opozorilo';
+import { Info } from './Components/Info';
 
-import { ekipe, IEkipa } from './Components/SeznamEkip';
+interface IgralecProps {
+  igralec: Igralec;
+}
 
 const Ekipa = () => {
   const { ekipaId } = useParams();
 
-  const ekipa: IEkipa = ekipe.find((e) => e.id === parseInt(ekipaId));
+  const ekipa: EkipaProps = ekipe.find((e) => e.id === parseInt(ekipaId));
 
-  return <h2>Ime ekipe {ekipa ? ekipa.title : 'ni podatka'}</h2>;
+  return (
+    <>
+      <h2>IME EKIPE - {ekipa ? ekipa.title : 'ni podatka'}</h2>
+      {ekipa && (
+        <div>
+          <h3>Leto ustanovitve: {ekipa.letoUstanovitve}</h3>
+          <h3>Direktor: {ekipa.direktor}</h3>
+          <h3>Trener: {ekipa.trener}</h3>
+          <h2>Igralci:</h2>
+          {ekipa.igralci.map((igralec) => (
+            <div key={igralec.ime}>
+              <Igralec
+                                ime={igralec.ime}
+                                starost={igralec.starost}
+                                stDresa={igralec.stDresa}
+                                pozicija={igralec.pozicija}
+                                poskodovan={igralec.poskodovan}
+                />
+            </div>
+          ))}
+          <Opozorilo steviloIgralcev={ekipa.igralci.length} />
+          <Info steviloIgralcev={ekipa.igralci.length} />
+        </div>
+      )}
+    </>
+  );
 };
 
 const router = createBrowserRouter([
@@ -44,7 +74,4 @@ root.render(
   </StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
