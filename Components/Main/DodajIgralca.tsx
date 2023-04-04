@@ -21,10 +21,10 @@ export const DodajIgralca = ({ addPlayer }: DodajIgralcaProps) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const newPlayer: Igralec = {
+    const newPlayer: Igralec = { //obstojeci igralci
       ...player,
     };
-    const updatedTeam: EkipaProps = {
+    const updatedTeam: EkipaProps = { //dodamo novega igralca ekipi
       ...team,
       igralci: [...team.igralci, newPlayer], // add the new player to the team
     };
