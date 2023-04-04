@@ -10,42 +10,70 @@ import {
   RouterProvider,
   useParams,
 } from 'react-router-dom';
-import { ekipe, EkipaProps } from './Components/SeznamEkip';
-import { Igralec } from './Components/Igralec';
+import { EkipaProps, ekipe } from './Components/SeznamEkip';
+import { Igralec, IgralecProps } from './Components/Igralec';
 import { Opozorilo } from './Components/Opozorilo';
 import { Info } from './Components/Info';
 
-interface IgralecProps {
-  igralec: Igralec;
+export interface SeznamIgralcevProps {
+  team: EkipaProps;
 }
 
-const Ekipa = () => {
-  const { ekipaId } = useParams();
+export const SeznamIgralcev = ({ team }: SeznamIgralcevProps) => {
+  /*
+    const { ekipaId } = useParams();
+    //@ts-ignore
+    const ekipa: EkipaProps = ekipe.find((e) => e.id === parseInt(ekipaId));
+*/
 
-  const ekipa: EkipaProps = ekipe.find((e) => e.id === parseInt(ekipaId));
+  return (
+    <div>
+      {team.igralci.map((igralec) => (
+        <div key={igralec.ime}>
+          <Igralec
+            ime={igralec.ime}
+            starost={igralec.starost}
+            stDresa={igralec.stDresa}
+            pozicija={igralec.pozicija}
+            poskodovan={igralec.poskodovan}
+          />
+        </div>
+      ))}
+    </div>
+  );
+};
+export const Ekipa = ({ team }: SeznamIgralcevProps) => {
+  /*
+    const { ekipaId } = useParams();
+
+    //@ts-ignore
+    const ekipa: EkipaProps = ekipe.find((e) => e.id === parseInt(ekipaId));
+*/
 
   return (
     <>
-      <h2>IME EKIPE - {ekipa ? ekipa.title : 'ni podatka'}</h2>
-      {ekipa && (
+      <h2>IME EKIPE - {team ? team.title : 'ni podatka'}</h2>
+      {team && (
         <div>
-          <h3>Leto ustanovitve: {ekipa.letoUstanovitve}</h3>
-          <h3>Direktor: {ekipa.direktor}</h3>
-          <h3>Trener: {ekipa.trener}</h3>
+          <h3>Leto ustanovitve: {team.letoUstanovitve}</h3>
+          <h3>Direktor: {team.direktor}</h3>
+          <h3>Trener: {team.trener}</h3>
           <h2>Igralci:</h2>
-          {ekipa.igralci.map((igralec) => (
-            <div key={igralec.ime}>
-              <Igralec
-                                ime={igralec.ime}
-                                starost={igralec.starost}
-                                stDresa={igralec.stDresa}
-                                pozicija={igralec.pozicija}
-                                poskodovan={igralec.poskodovan}
+          <div>
+            {team.igralci.map((igralec) => (
+              <div key={igralec.ime}>
+                <Igralec
+                  ime={igralec.ime}
+                  starost={igralec.starost}
+                  stDresa={igralec.stDresa}
+                  pozicija={igralec.pozicija}
+                  poskodovan={igralec.poskodovan}
                 />
-            </div>
-          ))}
-          <Opozorilo steviloIgralcev={ekipa.igralci.length} />
-          <Info steviloIgralcev={ekipa.igralci.length} />
+              </div>
+            ))}
+          </div>
+          <Opozorilo steviloIgralcev={team.igralci.length} />
+          <Info steviloIgralcev={team.igralci.length} />
         </div>
       )}
     </>
@@ -59,7 +87,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/ekipa/:ekipaId',
-        element: <Ekipa />,
+        element: <Ekipa team={ekipe[0]} />,
       },
     ],
   },

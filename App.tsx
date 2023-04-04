@@ -4,13 +4,13 @@ import './App.css';
 import { Header, Footer, Main } from './Components';
 
 function App() {
-  return (
-    <>
-      <Header teamName="Chelsea FC" />
-      <Main />
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Header teamName="Chelsea FC" />
+            <Main />
+            <Footer />
+        </>
+    );
 }
 
 export default App;
